@@ -6,20 +6,25 @@ var quizBtn = document.getElementById("quizBtn");
 var setUserName = document.getElementById("setUserName")
 var setEmail = document.getElementById("setEmail")
 
-// On Submit
-function onSubmit(){
-    var Name = document.getElementById("Name");
+ var Name = document.getElementById("Name");
     var Email = document.getElementById("Email");
     var Phone = document.getElementById("Phone");
     var Institute= document.getElementById("Institute");
     
-
-    if(Name.innerHTML == "" && Email.innerHTML == "" &&  Phone.innerHTML == "" && Institute.innerHTML == ""){
-            quizForm[0].classList.add("hide");
-            quizStartBtn[0].classList.remove("hide")
-            setUserName.innerText = `Name: ${Name.value}`
-            setEmail.innerText = `Email: ${Email.value}`
+// On Submit
+function onSubmit(){
+   
+  if (Name.value == '' || Email.value == '' || Phone.value == '' || Institute.value == '') {
+        alert('Oops! Form must be filled');
     }
+
+ else{
+        quizStartBtn[0].classList.remove("hide")
+        quizForm[0].classList.add("hide");
+
+        setUserName.innerText = `Name: ${Name.value}`
+        setEmail.innerText = `Email: ${Email.value}`
+ } 
 
 }
 
@@ -132,7 +137,7 @@ var Quizquestion = document.getElementById('Quizquestion');
 var quesNum = document.getElementById("quesNum")
 var nextQuest = document.getElementById("nextQuest")
 var score = 0;
-
+var marks = 0;
 //Quiz Start Button
 quizBtn.onclick = function(){
     quizStartBtn[0].classList.add("hide");
@@ -205,6 +210,8 @@ function quesChange(index){
 }
 //Result Box or Question Check 
 const resultBox = document.querySelector(".resultBox");
+const scoreText = resultBox.querySelector(".score_text");
+
 function optionSelected(answer){
     // console.log(answer.innerHTML)
     if(answer.innerHTML === quizQuestions[count].answer){
@@ -212,30 +219,36 @@ function optionSelected(answer){
         nextQuest.style.display = "block"
         answer.classList.add("success")
         score += 1;
+        marks += 5;
         console.log(score)
-      
-        const scoreText = resultBox.querySelector(".score_text");
-        if (score > 3){ // if user scored more than 3
+     
+        
+        if (score > 3) { // if user scored more than 3
             //creating a new span tag and passing the user score number and total question number
-            let scoreTag = '<span>and congrats! 🎉, You got <p>'+ score +' out of '+ quizQuestions.length +'</p></span>';
+            let scoreTag = '<span>  <p> ' + ' <p>' +'Name: ' + Name.value + '</p>' + '<p> and congrats! 🎉, You got ' + score + ' out of ' + quizQuestions.length + '</p>' + '<p> And your marks is ' + marks + ' out of 35 ' + '</p></span>';
             scoreText.innerHTML = scoreTag;  //adding new span tag inside score_Text
-           
+
         }
-        else if(score > 1){ // if user scored more than 1
-            let scoreTag = '<span>and nice 😎, You got <p>'+ score +' out of '+ quizQuestions.length +'</p></span>';
-            scoreText.innerHTML = scoreTag;
-           
-        }
-        else{ // if user scored less than 1
-            let scoreTag = '<span>and sorry 😐, You got only <p>'+score +' out of '+ quizQuestions.length +'</p></span>';
+        else if (score > 1) { // if user scored more than 1
+            let scoreTag = '<span>  <p>' + ' <p>'+'Name: ' + Name.value + '</p>' + '  <p> and nice 😎, You got ' + score + ' out of ' + quizQuestions.length + '</p>' + ' <p> And your marks is ' + marks + ' out of 35'  +  '</p></span>';
             scoreText.innerHTML = scoreTag;
         }
+    
+        else { // if user scored less than 1
+            let scoreTag = '<span>  <p>' + '<p>'+'Name: ' + Name.value + '</p>' + ' <p> and sorry 😐, You got only ' + score + ' out of ' + quizQuestions.length +'</p>' + ' <p> And your marks is ' + marks + ' out of 35 '  +  '</p></span>';
+            scoreText.innerHTML = scoreTag;
+        }
+
 
         
 
     }
     else{
         console.log("block")
+         if(score==0){
+            let scoreTag = '<span>  <p>' + '<p>'+'Name: ' + Name.value + '</p>' + ' <p>  Fail 😐, You got only ' + score + ' out of ' + quizQuestions.length +'</p>' + ' <p> And your marks is ' + marks + ' out of 35 '  +  '</p></span>';
+            scoreText.innerHTML = scoreTag;
+        }
         nextQuest.style.display = "block"
         answer.classList.add("wrong")
       
